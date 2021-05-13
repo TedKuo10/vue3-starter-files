@@ -24,7 +24,7 @@
 // obj.fn(1,2,3);
 
 // #3 注意：this 的指向相當複雜，大部分情境只需要了解其中一種即可(95%)
-// 傳統函式中的 this 只與調用方式有關
+// 傳統函式中的 this 只與調用方式有關，跟怎麼調用無關
 var someone = '全域';
 function callSomeone() {
   console.log(this.someone);
@@ -38,23 +38,24 @@ var obj = {
     console.log(this.someone);
   }
 }
-obj.callSomeone();
+// obj.callSomeone();
 
 var obj2 = {
   someone: '物件2',
   callSomeone
 }
-obj2.callSomeone();
+// obj2.callSomeone(); // 跟怎麼定義無關，看如何調用函式
 
 var wrapObj = {
   someone: '外層物件',
   callSomeone,
   innerObj: {
     someone: '內層物件',
-    callSomeone,
+    callSomeone
   }
 }
-wrapObj.innerObj.callSomeone();
+// wrapObj.callSomeone();
+// wrapObj.innerObj.callSomeone();
 
 var obj3 = {
   someone: '物件 3',
@@ -62,7 +63,7 @@ var obj3 = {
     callSomeone(); // 通常平常不會這樣去取用 this
   }
 }
-obj3.fn();
+// obj3.fn();
 
 var obj4 = {
   someone: '物件 4',

@@ -6,6 +6,11 @@
 // #1 箭頭函式的縮寫
 const arr = [1, 2, 3, 4, 5];
 
+// const filterArr = arr.filter(function(item) {
+//   return item % 2;
+// });
+// console.log(filterArr);
+
 // const filterArr = arr.filter(item => item % 2); // 取有餘數的值（單數）
 // console.log(filterArr);
 
@@ -16,13 +21,24 @@ const arr = [1, 2, 3, 4, 5];
 // var name = '全域'
 // const person = {
 //   name: '小明',
-//   callName: function () { 
+//   callName: function () {
 //     console.log('1', this.name); // 1 小明
 //     setTimeout(function () {
 //       console.log('2', this.name); // 2
 //       console.log('3', this); // 3
 //     }, 10);
 //   },
+// }
+// person.callName();
+// const person = {
+//   name: '小明',
+//   callName: function () {
+//     console.log('1', this.name); // 1 小明
+//     setTimeout(() => { // 看外層函式
+//       console.log('2', this.name); // 2
+//       console.log('3', this); // 3
+//     }, 10);
+//   }
 // }
 // person.callName();
 
@@ -32,9 +48,9 @@ const arr = [1, 2, 3, 4, 5];
 // var name = '全域'
 // const person = {
 //   name: '小明',
-//   callName: () => { 
+//   callName: () => {
 //     console.log(this.name); // 請尋找箭頭所在的作用域為何？
-//   },
+//   }
 // }
 // person.callName();
 
@@ -43,7 +59,7 @@ const arr = [1, 2, 3, 4, 5];
 // const person = {
 //   name: '小明',
 //   callMe() {
-//     const callName = () => { 
+//     const callName = () => {
 //       console.log(this.name); // 請尋找箭頭所在的作用域為何？
 //     };
 //     callName();
@@ -52,7 +68,7 @@ const arr = [1, 2, 3, 4, 5];
 // person.callMe();
 
 // #4 實戰手法
-// var someone = '全域';
+var someone = '全域';
 // function callSomeone() {
 //   console.log(this.someone);
 // }
@@ -67,7 +83,24 @@ const arr = [1, 2, 3, 4, 5];
 //   }
 // }
 
-// obj4.fn();
+// 避免 this 不如預期
+// 1. this 先指向其它變數
+// 或
+// 2. 使用箭頭函式
+var obj4 = {
+  someone: '物件 4',
+  fn() {
+    // const vm = this; // vm 在 Vue 中意指 ViewModel
+    // setTimeout(() => {
+    //   console.log(vm.someone);
+    // });
+    setTimeout(() => {
+      console.log(this.someone);
+    });
+  }
+}
+
+obj4.fn();
 </script>
 <!-- 🙇🙇練習結束🙇🙇 -->
 </main>
