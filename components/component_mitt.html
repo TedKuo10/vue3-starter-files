@@ -9,10 +9,13 @@
   <card-on></card-on>
 
   <card-emit></card-emit>
+  <!-- 目標將資料從 cardEmit 送到 cardOn -->
 </div>
 
 <script type="module">
-  import 'https://unpkg.com/mitt/dist/mitt.umd.js'; // mitt
+  import 'https://unpkg.com/mitt/dist/mitt.umd.js'; // mitt 套件
+
+  const emitter = mitt();
 
   const app = Vue.createApp({});
 
@@ -28,7 +31,9 @@
     },
     methods: {
       sendData() {
-
+        console.log("sendData");
+        emitter.emit('sendProduct', this.product);
+        // 自定義的事件名稱, 參數
       }
     },
     template: `<div class="card" style="width: 18rem;">
@@ -45,7 +50,10 @@
       }
     },
     created() {
-
+      emitter.on('sendProduct', (data) => {
+        console.log('card-on',data);
+        this.item = data;
+      });
     },
     template: `<div class="card" style="width: 18rem;">
       <div class="card-body">

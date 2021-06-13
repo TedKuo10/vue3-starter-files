@@ -36,7 +36,7 @@
     emits: ['add'],
     // 主要會出現在該值是由 data 定義，但難以追蹤他的變化時會出現
     template: `
-      <button type="button" @click="num++">調整 num 的值</button>
+      <button type="button" @click="num++">調整 num 的值{{num}}</button>
       <button type="button" @click="$emit('add', num)">add</button>`,
   });
 

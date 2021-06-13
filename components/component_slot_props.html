@@ -20,8 +20,9 @@
     <template #header>
       買早餐
     </template>
-    <template #default="{product, veganName}">
+    <template #default="{product, veganName='是素非素'}">
       {{product}}
+      <br>
       {{veganName}}
     </template>
   </card2>

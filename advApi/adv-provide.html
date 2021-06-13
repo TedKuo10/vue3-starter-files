@@ -10,7 +10,7 @@
     <li>內層元件補上 inject</li>
   </ul>
   <card></card>
-
+  {{ user.name }}
   <h3>注意事項：響應式</h3>
 
 </div>
@@ -21,11 +21,12 @@ const userComponent = {
     {{ user.name }}
     {{ user.uuid }}
   </div>`,
+  inject: ['user'],
   created() {
     console.log(this.user);
 
-    // 如果根元件沒有使用 function return 則不能使用響應式
-    // this.user.name = '杰倫'
+    // 如果根元件沒有使用 function return 則不能使用響應式 ( 改了內外都改 )
+    this.user.name = '杰倫';
   }
 }
 
@@ -38,6 +39,17 @@ const app = Vue.createApp({
       }
     }
   },
+  provide() {
+    return {
+      user: this.user
+    }
+  }
+  // provide: {
+  //   user: {
+  //     name: '小明',
+  //     uuid: 78163
+  //   }
+  // }
 })
 
   app.component('card', {
@@ -51,9 +63,11 @@ const app = Vue.createApp({
     components: {
       userComponent
     },
+    inject: ['user'],
     template: `
       <div class="card" style="width: 18rem;">
         <div class="card-body">
+          {{ user.name }}
           <userComponent></userComponent>
         </div>
       </div>

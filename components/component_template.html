@@ -22,7 +22,7 @@
   <hr>
   <h3>元件運用</h3>
   <h4>直接使用 標籤 名稱</h4>
- <alert></alert>
+  <alert></alert>
 
   <h4>搭配 v-for 也是沒問題的</h4>
   <alert v-for="i in array" :key="i"></alert>
@@ -49,6 +49,7 @@
     </thead>
     <tbody>
       <!-- <table-row></table-row> -->
+      <!-- 在 HTML 結構裡面，tbody 就只能接 tr 所以上面那個會跑掉 -->
       <tr v-is="'table-row'"></tr>
     </tbody>
   </table>

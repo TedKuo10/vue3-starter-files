@@ -81,7 +81,15 @@
         }
       },
     },
-    template: `{{propA}},{{propC}},{{propD}}<br>{{propE}},{{propF}}`
+    template: `
+    <ul>
+      <li>{{propA}}</li>
+      <li>{{propB}}</li>
+      <li>{{propC}}</li>
+      <li>{{propD}}</li>
+      <li>{{propE}}</li>
+      <li>{{propF}}</li>
+    </ul>`
   })
 
   app.mount('#app');

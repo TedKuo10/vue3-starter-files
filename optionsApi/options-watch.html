@@ -36,12 +36,16 @@
   <label><input type="checkbox"  v-model="product.vegan"> 素食</label>
   <p>result4: {{ result4 }}</p>
 
+  <h3>監聽 props</h3>
+  <card-prop :num="num"></card-prop>
+
 </div>
 
 <script>
-const App = {
+const App = Vue.createApp({
   data() {
     return {
+      num: 0,
       name: '',
       tempName: '',
       result: '',
@@ -85,16 +89,75 @@ const App = {
   },
   computed: {
     result2() {
-      
+      return `媽媽買了 ${this.productName}，總共花費 ${this.productPrice} 元，另外這 ${this.productVegan? '是' : '不是'} 素食的`;
     }
   },
+  watch: {
+    // 深層監聽，監聽多個變數
+    product: {
+      handler(n, o) {
+        // console.log(n, o);
+        this.result4 = `媽媽買了 ${this.product.name}，總共花費 ${this.product.price} 元，另外這 ${this.product.vegan? '是' : '不是'} 素食的`
+      },
+      deep: true,
+    },
+    productName() {
+      this.result3 = `媽媽買了 ${this.productName}，總共花費 ${this.productPrice} 元，另外這 ${this.productVegan? '是' : '不是'} 素食的`;
+    },
+    productPrice() {
+      this.result3 = `媽媽買了 ${this.productName}，總共花費 ${this.productPrice} 元，另外這 ${this.productVegan? '是' : '不是'} 素食的`;
+    },
+    productVegan(n,o) {
+      console.log(n,o);
+      this.result3 = `媽媽買了 ${this.productName}，總共花費 ${this.productPrice} 元，另外這 ${this.productVegan? '是' : '不是'} 素食的`;
+    },
+    tempName(n, o) {
+      // console.log(n,o);
+      if (n.length >= 10) {
+        this.result = `文字長度為 ${n.length} 個字，將儲存至變數中`;
+        this.name = n;
+      } else {
+        this.result = `輸入的文字僅有 ${n.length} 個字，上一次有 ${o.length} 個字`
+      }
+    }
+  }
   // 保留文字：
   // `文字長度為 ${n.length} 個字，將儲存至變數中`
   // `輸入的文字僅有 ${n.length} 個字，上一次有 ${o.length} 個字`
   // `媽媽買了 ${this.productName}，總共花費 ${this.productPrice} 元，另外這 ${this.productVegan? '是' : '不是'} 素食的`
+});
 
-};
-Vue.createApp(App).mount('#app');
+
+App.component('cardProp', {
+  props: ['num'],
+  data() {
+    return {
+      innerNum: 0,
+      watchNum: 0
+    }
+  },
+  template: `
+  <div class="card">
+  <div class="card-body">
+    原始 props: {{ num }} <br>
+    <input type="text" v-model="num"> <br>
+    透過生命週期導入的值： {{ innerNum }} <br>
+    透過 watch 持續監聽的值：{{ watchNum }}
+  </div>
+</div>
+  `,
+  watch: {
+    num() {
+      this.watchNum = this.num;
+    }
+  },
+  created() {
+    this.innerNum = this.num;
+  },
+});
+
+
+App.mount('#app');
 </script>
 
 
